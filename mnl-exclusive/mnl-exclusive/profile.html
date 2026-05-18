@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | MNL EXCLUSIVE</title>
+
+    <link rel="stylesheet" href="./CSS/profile.css" />
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="./HomePage.html">Home</a></li>
+            <li><a href="./HomePage.html#about">About&nbsp;Us</a></li>
+            <li><a href="./indexCart.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a></li>
+
+            <li><a href="./LoginPage.php">
+                <i class="fa-regular fa-circle-user"></i>
+            </a></li>
+
+            <li>
+                <button id="darkToggle">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="profile-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="user-info">
+            <img src="IMAGES/profile.webp" class="avatar" onerror="this.src='https://via.placeholder.com/110'">
+
+            <h2>Loading...</h2>
+            <p>Member ⭐</p>
+
+            <div class="user-stats">
+
+                <div>
+                    <h3>0</h3>
+                    <span>Orders</span>
+                </div>
+
+                <div>
+                    <h3>0</h3>
+                    <span>Vouchers</span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="#" class="active menu-link" data-target="profile-section">
+                <i class="fa-solid fa-user"></i>
+                Profile
+            </a>
+
+            <a href="#" class="menu-link" data-target="topay-section">
+                <i class="fa-solid fa-wallet"></i>
+                To Pay
+            </a>
+
+            <a href="#" class="menu-link" data-target="toship-section">
+                <i class="fa-solid fa-box"></i>
+                To Ship
+            </a>
+
+            <a href="#" class="menu-link" data-target="toreceive-section">
+                <i class="fa-solid fa-truck"></i>
+                To Receive
+            </a>
+
+            <a href="#" class="menu-link" data-target="completed-section">
+                <i class="fa-solid fa-star"></i>
+                Completed
+            </a>
+
+            <a href="#" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- PROFILE -->
+        <section class="card page-section" id="profile-section">
+
+            <div class="top-banner">
+
+                <div>
+                    <h1>Welcome Back 👋</h1>
+                    <p>Track your orders and vouchers here.</p>
+                </div>
+
+                <!-- 🔥 EDIT BUTTON FIXED -->
+                <button id="editProfileBtn">
+                    <i class="fa-solid fa-pen"></i> Edit Profile
+                </button>
+
+            </div>
+
+
+            <!-- ORDER STATUS -->
+            <div class="order-status">
+
+                <div class="status-box" data-target="topay-section">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>To Pay</span>
+                </div>
+
+                <div class="status-box" data-target="toship-section">
+                    <i class="fa-solid fa-box"></i>
+                    <span>To Ship</span>
+                </div>
+
+                <div class="status-box" data-target="toreceive-section">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>To Receive</span>
+                </div>
+
+                <div class="status-box" data-target="completed-section">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Completed</span>
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE DETAILS -->
+            <div class="details-grid">
+
+                <h3>Profile Details</h3>
+
+                <div class="detail-card">
+                    <strong>Name</strong>
+                    <p id="detail-name">—</p>
+                </div>
+
+                <div class="detail-card">
+                    <strong>Email</strong>
+                    <p id="detail-email">—</p>
+                </div>
+
+                <div class="detail-card">
+                    <strong>Phone</strong>
+                    <p id="detail-phone">—</p>
+                </div>
+
+                <div class="detail-card">
+                    <strong>Member Since</strong>
+                    <p id="detail-since">—</p>
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <!-- OTHER SECTIONS SAME (UNCHANGED) -->
+        <section class="card page-section" id="topay-section" style="display:none;">
+            <h2>To Pay 💳</h2>
+        </section>
+
+        <section class="card page-section" id="toship-section" style="display:none;">
+            <h2>To Ship 📦</h2>
+        </section>
+
+        <section class="card page-section" id="toreceive-section" style="display:none;">
+            <h2>To Receive 🚚</h2>
+        </section>
+
+        <section class="card page-section" id="completed-section" style="display:none;">
+            <h2>Completed ⭐</h2>
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- 🔥 EDIT PROFILE MODAL -->
+<div id="editModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit Profile</h2>
+
+        <label>Username</label>
+        <input type="text" id="usernameInput">
+
+        <label>Profile Picture</label>
+        <input type="file" id="imageInput" accept="image/*">
+
+        <button id="saveProfileBtn">Save</button>
+        <button id="closeModalBtn">Cancel</button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER (UNCHANGED) -->
+<footer class="footer">
+    <div class="footer-section terms">
+        <h3>Terms and Condition</h3>
+        <p>By using this website, you agree to our terms...</p>
+    </div>
+
+    <div class="footer-section Help">
+        <h3>Help</h3>
+        <a href="./faq.html">FAQ</a>
+        <a href="./privacypolicy.html">Privacy Policy</a>
+        <a href="./returnpolicy.html">Return Policy</a>
+        <a href="./bulkorder.html">Bulk Order</a>
+    </div>
+
+    <div class="footer-section Follow">
+        <h3>Follow Us</h3>
+        <p>Tiktok : <a href="#">manilaexclusives2</a></p>
+    </div>
+
+    <div class="footer-section Contact">
+        <h3>Contact Us</h3>
+        <p>Manila, Philippines</p>
+        <p>Email: manilaexclusive@gmail.com</p>
+    </div>
+</footer>
+
+
+<script src="JAVASCRIPT/profile.js"></script>
+
+</body>
+</html>

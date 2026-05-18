@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="CSS/stylePlaceOrder.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <title>Place Order - MNL Exclusive</title>
+</head>
+<body>
+  <header>
+    <h1>MNL</h1>
+    <h1 class="EX">EXCLUSIVE</h1>
+    <nav>
+      <ul>
+        <li><a href="./HomePage.html">Home</a></li>
+        <li><a href="./HomePage.html#about">About&nbsp;Us</a></li>
+        <li><a href="./indexCart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        <li><a href="#" id="profileBtn"><i class="fa-regular fa-circle-user"></i></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="breadcrumb">Cart > <span>Place Order</span> > Pay > Order Complete</div>
+
+  <main class="placeorder-layout">
+
+    <!-- LEFT: SHIPPING FORM -->
+    <section class="form-section">
+      <h2>Shipping Information</h2>
+      <form id="shippingForm">
+        <label>Full Name</label>
+        <input type="text" id="fullname" placeholder="Enter full name" required />
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="09XXXXXXXXX" required />
+
+        <label>Address</label>
+        <textarea id="address" placeholder="Street, Barangay, City" required></textarea>
+
+        <label>Postal Code</label>
+        <input type="text" id="postal" placeholder="e.g. 1001" required />
+
+        <button type="submit" id="continue">Continue to Payment</button>
+      </form>
+    </section>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <section class="summary-panel">
+      <h2 id="orderTitle">ORDER SUMMARY</h2>
+
+      <!-- Items will be loaded here-->
+      <div id="orderSummaryItems"></div>
+
+      <div class="summary-item">
+        <span>Item(s) subtotal</span>
+        <span id="itemSubtotal">₱0.00</span>
+      </div>
+
+      <div class="summary-item">
+        <span>Shipping fee</span>
+        <span id="shipping">₱0.00</span>
+      </div>
+
+      <div class="summary-total">
+        <span>TOTAL</span>
+        <span id="total">₱0.00</span>
+      </div>
+
+      <p style="font-size:11px; margin-top:10px;">
+        IMPORTANT: Confirmed orders can no longer be modified. Sales invoice will be issued electronically via email and app order history.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-section terms">
+      <h3>Terms and Condition</h3>
+      <p>By using this website, you agree to our terms, which include accurate use of our site and products, understanding that prices and availability may change without notice, that all purchases are subject to confirmation, that returns are accepted within 7 days if items are unworn and in original condition, that all content including designs and images belong to Manila Exclusive, and may not be copied or used without permission, and that we are not liable for any damages resulting from use of this site or our products.</p>
+    </div>
+    <div class="footer-section Help">
+      <h3>Help</h3>
+      <a href="./faq.html">FAQ</a>
+      <a href="./privacypolicy.html">Privacy Policy</a>
+      <a href="./return.html">Return Policy</a>
+      <a href="./bulkorder.html">Bulk Order</a>
+    </div>
+    <div class="footer-section Follow">
+      <h3>Follow Us</h3>
+      <p>Tiktok : <a href="https://www.tiktok.com/@manilaexclusives2">@manilaexclusives2</a></p>
+    </div>
+    <div class="footer-section Contact">
+      <h3>Contact Us</h3>
+      <p>J.P. Rizal Extension, West Rembo, 1644 City of Taguig, Metro Manila, Philippines</p>
+      <p>Email: <a href="mailto:manilaexclusive@gmail.com">manilaexclusive@gmail.com</a></p>
+    </div>
+  </footer>
+
+  
+  <script src="JAVASCRIPT/indexPlaceOrder.js"></script>
+</body>
+</html>

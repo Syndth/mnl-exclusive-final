@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+      .item-image { width:100%; height:220px; object-fit:cover; object-position:center top; display:block; border-radius:6px; }
+      .item-price { color:#c0392b; font-weight:bold; }
+      .itemcard h5 { color:#1a1a1a; font-size:14px; margin:8px 0 4px; }
+      .price p { color:#c0392b; font-size:16px; font-weight:700; }
+      .selected-color-display, .selected-size-display { color:#e74c3c; font-weight:600; }
+      .color.selected { outline:3px solid #e74c3c; outline-offset:2px; }
+      .size.selected { background:#e74c3c; color:#fff; border-color:#e74c3c; }
+    </style>
+    <title>MNL Exclusive</title>
+</head>
+<body>
+    <header>
+      <a href="HomePage.html#home"><img src="IMAGES/LOGO.jpg" alt="MNLLOGO" class="LOGO"></a>
+      <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About&nbsp;Us</a></li>
+            <li><a href="./indexCart.html" class="cart-icon-link"><i class="fa-solid fa-cart-shopping"></i><span class="cart-quantity-indicator">0</span></a></li>
+            <li><a href="./LoginPage.php" id="profileIcon"><i class="fa-regular fa-circle-user"></i></a></li>
+        </ul>
+      </nav>
+      <nav class="nav-links">
+          <a href="#new">NEW & FEATURED</a>
+          <a href="#shirts">SHIRTS</a>
+          <a href="#pants">PANTS</a>
+      </nav>
+    </header>
+
+    <section id="home">
+      <div class="home-text">
+        <p>Driven by passion. Built for movement. Designed for everyone discover styles that keep you pushing forward on the streets, in the gym , and beyond. - <span>MNL EXCLUSIVE</span></p>
+      </div>
+    </section>
+
+<!-- NEW AND FEATURED -->
+<section id="new">
+  <div class="container">
+
+    <div class="itemcard" data-item-id="new-item1" data-image="IMAGES/interlude.jpg">
+      <img src="IMAGES/interlude.jpg" alt="Manila's interlude" class="item-image">
+      <h5>Manila's Interlude</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">399.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="new-item2" data-image="IMAGES/stay.jpg">
+      <img src="IMAGES/stay.jpg" alt="Stay Exclusive" class="item-image">
+      <h5>Stay Exclusives</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">399.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="new-item3" data-image="IMAGES/Meshwhite27.jpeg">
+      <img src="IMAGES/Meshwhite27.jpeg" alt="Mesh Jersey 27" class="item-image">
+      <h5>MNL Exclusives Mesh Jersey 27</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:black;"></div><div class="color" data-color="White" style="background:white;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">499.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="new-item4" data-image="IMAGES/sweatpants.jpeg">
+      <img src="IMAGES/sweatpants.jpeg" alt="Baggy Sweat Pants" class="item-image">
+      <h5>Baggy Sweat Pants</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Dark Gray" style="background:rgb(109,109,109);"></div><div class="color" data-color="Light Gray" style="background:rgb(170,170,170);"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">699.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="new-item5" data-image="IMAGES/MEslim.jpeg">
+      <img src="IMAGES/MEslim.jpeg" alt="ME SLIM FIT" class="item-image">
+      <h5>M.E Slim fit</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="White" style="background:#fff;"></div><div class="color" data-color="Black" style="background:#000;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">529.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="new-item6" data-image="IMAGES/letemknow.jpeg">
+      <img src="IMAGES/letemknow.jpeg" alt="Let em know" class="item-image">
+      <h5>Let em know</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Khaki" style="background:rgb(240,230,140);"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">351.12</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT US -->
+<section id="about">
+  <div class="about-container">
+    <div class="about-text">
+      <h2>About <span>MNL EXCLUSIVE</span></h2>
+      <p>MNL Exclusive is a modern clothing brand born in the heart of Manila, Philippines. We create stylish and high-quality apparel that reflects the bold spirit, creativity, and culture of the Filipino youth.</p>
+      <p>Our mission is to bring exclusive fashion to everyone combining comfort, confidence, and individuality in every design.</p>
+      <p>At MNL Exclusive, we believe that fashion is more than just clothing it's a statement of identity.</p>
+    </div>
+    <div class="picright">
+      <div class="about-image"><h1>Coming Soon</h1></div>
+      <div class="about-image1"><h1>Coming Soon</h1></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIRTS -->
+<section id="shirts">
+  <div class="container">
+
+    <div class="itemcard" data-item-id="shirt-item1" data-image="IMAGES/manilainter.jpg">
+      <img src="IMAGES/manilainter.jpg" alt="Manila's interlude" class="item-image">
+      <h5>Manila's Interlude</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">399.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="shirt-item2" data-image="IMAGES/stay.jpg">
+      <img src="IMAGES/stay.jpg" alt="Stay Exclusive" class="item-image">
+      <h5>Stay Exclusives</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">399.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="shirt-item3" data-image="IMAGES/Meshwhite27.jpeg">
+      <img src="IMAGES/Meshwhite27.jpeg" alt="Mesh Jersey 27" class="item-image">
+      <h5>MNL Exclusives Mesh Jersey 27</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">499.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="shirt-item4" data-image="IMAGES/mesh08.jpg">
+      <img src="IMAGES/mesh08.jpg" alt="Mesh Jersey 08" class="item-image">
+      <h5>MNL Exclusives Mesh Jersey 08</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">499.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="shirt-item5" data-image="IMAGES/MEslim.jpeg">
+      <img src="IMAGES/MEslim.jpeg" alt="ME SLIM FIT" class="item-image">
+      <h5>M.E Slim fit</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Black" style="background:#000;"></div><div class="color" data-color="White" style="background:#fff;"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">529.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+    <div class="itemcard" data-item-id="shirt-item6" data-image="IMAGES/letemknow.jpeg">
+      <img src="IMAGES/letemknow.jpeg" alt="Let em know" class="item-image">
+      <h5>Let em know</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Khaki" style="background:rgb(240,230,140);"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">351.12</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+  </div>
+</section>
+
+<section class="video-section">
+    <video autoplay loop muted playsinline class="bg-video">
+        <source src="VIDEO/mnl-vid.mp4" type="video/mp4">
+    </video>
+</section>
+
+<!-- PANTS -->
+<section id="pants">
+  <div class="container">
+
+    <div class="itemcard" data-item-id="pants-item1" data-image="IMAGES/sweatpants.jpeg">
+      <img src="IMAGES/sweatpants.jpeg" alt="Sweatpants" class="item-image">
+      <h5>Baggy Sweat Pants</h5>
+      <div class="color-options"><p>Color: <span class="selected-color-display"></span></p>
+        <div class="colors"><div class="color" data-color="Gray" style="background:gray;"></div><div class="color" data-color="Acid Gray" style="background:rgb(191,191,191);"></div></div></div>
+      <div class="size-option"><p>Size: <span class="selected-size-display"></span></p>
+        <div class="sizes"><button class="size">S</button><button class="size">M</button><button class="size">L</button><button class="size">XL</button><button class="size">XXL</button></div></div>
+      <div class="price"><p>₱<span class="item-price">699.00</span></p></div>
+      <div class="quantity"><button class="qty-minus" disabled>−</button><span class="item-qty">0</span><button class="qty-plus" disabled>+</button></div>
+      <button class="add-to-cart-btn" disabled>ADD TO CART</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-section terms">
+        <h3>Terms and Condition</h3>
+        <p>By using this website, you agree to our terms, which include accurate use of our site and products, understanding that prices and availability may change without notice, that all purchases are subject to confirmation, that returns are accepted within 7 days if items are unworn and in original condition, that all content including designs and images belong to Manila Exclusive, and may not be copied or used without permission, and that we are not liable for any damages resulting from use of this site or our products.</p>
+    </div>
+    <div class="footer-section Help">
+        <h3>Help</h3>
+        <a href="./faq.html">FAQ</a><a href="./privacypolicy.html">Privacy Policy</a>
+        <a href="./returnpolicy.html">Return Policy</a><a href="./bulkorder.html">Bulk Order</a>
+    </div>
+    <div class="footer-section Follow">
+        <h3>Follow Us</h3>
+        <p>Tiktok : <a href="https://www.tiktok.com/@manilaexclusives2">manilaexclusives2</a></p>
+    </div>
+    <div class="footer-section Contact">
+        <h3>Contact Us</h3>
+        <p>J.P. Rizal Extension, West Rembo, 1644 City of Taguig, Metro Manila, Philippines</p>
+        <p>Email: <a href="mailto:manilaexclusive@gmail.com">manilaexclusive@gmail.com</a></p>
+    </div>
+</footer>
+
+<script>
+
+// UPDATED CART 
+
+function updateCartIndicator() {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const totalQty = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const indicator = document.querySelector(".cart-quantity-indicator");
+    if (indicator) indicator.textContent = totalQty;
+}
+updateCartIndicator();
+
+
+// PROFILE ICON
+
+document.getElementById("profileIcon").addEventListener("click", function(e) {
+    e.preventDefault();
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const userRole   = localStorage.getItem("userRole");
+    if (isLoggedIn === "true") {
+        window.location.href = userRole === "admin" ? "./AdminDashboard.html" : "./profile.html";
+    } else {
+        window.location.href = "./LoginPage.php";
+    }
+});
+
+
+// ITEM CARDS - QTY + ADD TO CART
+
+document.querySelectorAll(".itemcard").forEach(function(card) {
+    const minusBtn   = card.querySelector(".qty-minus");
+    const plusBtn    = card.querySelector(".qty-plus");
+    const qtyDisplay = card.querySelector(".item-qty");
+    const addToCart  = card.querySelector(".add-to-cart-btn");
+    const sizeButtons  = card.querySelectorAll(".size");
+    const colorButtons = card.querySelectorAll(".color");
+    const colorDisplay = card.querySelector(".selected-color-display");
+    const sizeDisplay  = card.querySelector(".selected-size-display");
+
+    let selectedColor = null;
+    let selectedSize  = null;
+
+    function checkReady() {
+        const ready = selectedColor && selectedSize;
+        plusBtn.disabled   = !ready;
+        addToCart.disabled = !ready;
+        if (!ready) {
+            minusBtn.disabled = true;
+            qtyDisplay.textContent = "0";
+        }
+    }
+
+    colorButtons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            colorButtons.forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            selectedColor = btn.getAttribute("data-color");
+            colorDisplay.textContent = selectedColor;
+            checkReady();
+        });
+    });
+
+    sizeButtons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            sizeButtons.forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            selectedSize = btn.textContent;
+            sizeDisplay.textContent = selectedSize;
+            checkReady();
+        });
+    });
+
+    plusBtn.addEventListener("click", function() {
+        let qty = parseInt(qtyDisplay.textContent) || 0;
+        qtyDisplay.textContent = qty + 1;
+        minusBtn.disabled = false;
+    });
+
+    minusBtn.addEventListener("click", function() {
+        let qty = parseInt(qtyDisplay.textContent) || 0;
+        if (qty > 1) {
+            qtyDisplay.textContent = qty - 1;
+        } else {
+            qtyDisplay.textContent = "0";
+            minusBtn.disabled = true;
+        }
+    });
+
+    // ✅ ADD TO CART — saves to localStorage!
+    addToCart.addEventListener("click", function() {
+        const qty = parseInt(qtyDisplay.textContent) || 0;
+        if (qty === 0) { alert("Please add at least 1 item!"); return; }
+
+        const itemId   = card.getAttribute("data-item-id");
+        const itemName = card.querySelector("h5").textContent;
+        const itemPrice = parseFloat(card.querySelector(".item-price").textContent);
+        const imageUrl = card.getAttribute("data-image");
+
+        let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        const existingIndex = cartItems.findIndex(i => i.id === itemId && i.color === selectedColor && i.size === selectedSize);
+
+        if (existingIndex > -1) {
+            cartItems[existingIndex].quantity += qty;
+        } else {
+            cartItems.push({ id: itemId, name: itemName, price: itemPrice, color: selectedColor, size: selectedSize, quantity: qty, imageUrl: imageUrl });
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        updateCartIndicator();
+        alert("✅ Added to cart!\n" + itemName + "\nColor: " + selectedColor + "\nSize: " + selectedSize + "\nQty: " + qty);
+
+        // Reset card
+        qtyDisplay.textContent = "0";
+        plusBtn.disabled = true;
+        minusBtn.disabled = true;
+        addToCart.disabled = true;
+        colorButtons.forEach(b => b.classList.remove("selected"));
+        sizeButtons.forEach(b => b.classList.remove("selected"));
+        colorDisplay.textContent = "";
+        sizeDisplay.textContent = "";
+        selectedColor = null;
+        selectedSize = null;
+    });
+});
+</script>
+</body>
+</html>

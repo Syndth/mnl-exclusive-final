@@ -1,0 +1,405 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root{
+
+    --primary:#1f1f1f;
+    --secondary:#2c2c2c;
+    --light:#f5f5f5;
+    --white:#ffffff;
+    --gray:#8a8a8a;
+    --border:#dcdcdc;
+}
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#efefef;
+    color:#111;
+}
+
+/* HEADER */
+header{
+    width:100%;
+    background:white;
+    padding:25px 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+nav ul{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:20px;
+    list-style:none;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:#111;
+    font-size:15px;
+    transition:0.3s;
+    position:relative;
+}
+
+nav ul li a:hover{
+    color:#666;
+}
+
+/* MAIN CONTAINER */
+.profile-container{
+    display:flex;
+    gap:20px;
+    padding:25px;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:270px;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    height:fit-content;
+}
+
+/* USER */
+.user-info{
+    text-align:center;
+}
+
+.avatar{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #eee;
+}
+
+.user-info h2{
+    margin-top:15px;
+    font-size:22px;
+}
+
+.user-info p{
+    color:#777;
+    font-size:13px;
+}
+
+/* STATS */
+.user-stats{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+    gap:10px;
+}
+
+.user-stats div{
+    flex:1;
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:15px;
+}
+
+/* MENU */
+.menu{
+    margin-top:35px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#111;
+    padding:15px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#1f1f1f;
+    color:white;
+}
+
+#logoutBtn{
+    margin-top:40px;
+    background:#2c2c2c;
+    color:white;
+}
+
+/* CONTENT */
+.content{
+    flex:1;
+}
+
+/* CARD */
+.card{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* TOP */
+.top-banner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.top-banner h1{
+    font-size:28px;
+}
+
+.top-banner p{
+    color:#777;
+    margin-top:5px;
+}
+
+.top-banner button{
+    background:#1f1f1f;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* STATUS */
+.order-status{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.status-box{
+    background:#f7f7f7;
+    padding:22px;
+    text-align:center;
+    border-radius:18px;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.status-box:hover{
+    transform:translateY(-5px);
+    background:#1f1f1f;
+    color:white;
+}
+
+.status-box i{
+    font-size:26px;
+    margin-bottom:10px;
+    color:#1f1f1f;
+}
+
+/* DETAILS */
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.detail-card{
+    background:#f7f7f7;
+    padding:20px;
+    border-radius:15px;
+}
+
+/* VOUCHERS */
+.voucher-wrapper{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.voucher-card{
+    flex:1;
+    background:linear-gradient(135deg,#1f1f1f,#555);
+    color:white;
+    padding:22px;
+    border-radius:18px;
+}
+
+/* ORDER CARD */
+.order-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#f7f7f7;
+    padding:18px;
+    border-radius:18px;
+}
+
+/* PROGRESS */
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#dcdcdc;
+    border-radius:10px;
+    margin-top:12px;
+}
+
+.progress{
+    width:100%;
+    height:100%;
+    background:#1f1f1f;
+}
+
+/* FOOTER */
+.footer{
+    margin-top:40px;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding:40px 60px;
+    gap:30px;
+}
+
+.footer-section{
+    flex:1;
+    min-width:220px;
+}
+
+.footer-section h3{
+    margin-bottom:15px;
+    color:#ccc;
+}
+
+.footer-section p,
+.footer-section a{
+    color:#999;
+    font-size:14px;
+    line-height:1.7;
+    text-decoration:none;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark{
+    background:#121212;
+    color:#e5e5e5;
+}
+
+body.dark header{
+    background:#1a1a1a;
+}
+
+body.dark .card,
+body.dark .sidebar{
+    background:#1e1e1e;
+    color:#e5e5e5;
+}
+
+body.dark .menu a{
+    color:#e5e5e5;
+}
+
+body.dark .menu a:hover,
+body.dark .menu a.active{
+    background:#333;
+}
+
+body.dark .status-box{
+    background:#2a2a2a;
+    color:white;
+}
+
+body.dark .detail-card{
+    background:#2a2a2a;
+}
+
+body.dark .voucher-card{
+    background:linear-gradient(135deg,#222,#444);
+}
+
+body.dark .order-card{
+    background:#2a2a2a;
+}
+
+body.dark .footer{
+    background:#0d0d0d;
+}
+/* =========================
+   EDIT PROFILE MODAL (CENTER)
+========================= */
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.modal-content{
+    background:white;
+    width:320px;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    animation: pop 0.2s ease;
+}
+
+@keyframes pop{
+    from{
+        transform:scale(0.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.modal-content input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.modal-content button{
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#saveProfileBtn{
+    background:#1f1f1f;
+    color:white;
+}
+
+#closeModalBtn{
+    background:#ccc;
+}

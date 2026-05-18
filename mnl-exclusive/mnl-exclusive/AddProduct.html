@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <title>Add Product - MNL Exclusive</title>
+    <style>
+        .addproduct-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 1.5rem;
+        }
+        @media (max-width: 1000px) { .addproduct-layout { grid-template-columns: 1fr; } }
+
+        .form-card {
+            background: var(--color-white);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 1.5rem;
+        }
+        .form-card h2 {
+            font-size: 1rem; color: var(--color-dark);
+            margin-bottom: 1.2rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-light);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 700px) { .form-row { grid-template-columns: 1fr; } }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+        .form-group label { font-size: 0.82rem; color: var(--color-dark-variant); font-weight: 600; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.6rem 0.9rem;
+            border: 1px solid var(--color-light);
+            border-radius: 0.5rem;
+            background: var(--color-background);
+            color: var(--color-dark);
+            font-size: 0.88rem;
+            width: 100%; box-sizing: border-box;
+        }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+
+        .image-drop-zone {
+            border: 2px dashed var(--color-primary);
+            border-radius: 1rem; padding: 2rem;
+            text-align: center; cursor: pointer;
+            background: var(--color-background);
+            transition: background 0.2s; margin-bottom: 1rem;
+        }
+        .image-drop-zone:hover { background: var(--color-light); }
+        .image-drop-zone span.material-symbols-outlined { font-size: 2.5rem; color: var(--color-primary); }
+        .image-drop-zone p { font-size: 0.85rem; color: var(--color-dark-variant); margin-top: 0.5rem; }
+        .image-drop-zone input { display: none; }
+
+        .image-preview-wrap {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .image-preview-wrap img {
+            width: 100%; max-height: 200px;
+            object-fit: cover; border-radius: 0.5rem;
+            border: 1px solid var(--color-light);
+            display: none;
+        }
+
+        .size-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .size-btn {
+            padding: 0.4rem 0.9rem;
+            border: 1px solid var(--color-light);
+            border-radius: 0.4rem;
+            background: var(--color-background);
+            color: var(--color-dark);
+            cursor: pointer; font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .size-btn.selected { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+
+        .action-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .btn-publish {
+            flex: 1; padding: 0.8rem;
+            background: var(--color-primary); color: white;
+            border: none; border-radius: 0.5rem;
+            cursor: pointer; font-size: 0.9rem; font-weight: 700;
+        }
+        .btn-publish:hover { opacity: 0.85; }
+        .btn-draft {
+            flex: 1; padding: 0.8rem;
+            background: var(--color-light); color: var(--color-dark);
+            border: none; border-radius: 0.5rem;
+            cursor: pointer; font-size: 0.9rem; font-weight: 600;
+        }
+
+        /* Product list */
+        .product-list-card {
+            background: var(--color-white);
+            border-radius: 1rem; padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+        .product-list-card h2 {
+            font-size: 1rem; color: var(--color-dark);
+            margin-bottom: 1rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-light);
+        }
+        .product-item {
+            display: flex; align-items: center;
+            gap: 0.8rem; padding: 0.6rem 0;
+            border-bottom: 1px solid var(--color-light);
+        }
+        .product-item:last-child { border-bottom: none; }
+        .product-item img {
+            width: 44px; height: 44px;
+            object-fit: cover; border-radius: 0.4rem;
+            border: 1px solid var(--color-light);
+            flex-shrink: 0;
+        }
+        .product-item .pinfo { flex: 1; min-width: 0; }
+        .product-item .pname { font-size: 0.82rem; color: var(--color-dark); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-item .pprice { font-size: 0.78rem; color: var(--color-primary); }
+        .product-item .pbtns { display: flex; gap: 0.3rem; flex-shrink: 0; }
+        .btn-edit-small {
+            padding: 0.22rem 0.5rem; font-size: 0.72rem;
+            border: none; border-radius: 0.3rem;
+            cursor: pointer; background: var(--color-light); color: var(--color-dark);
+        }
+        .btn-del-small {
+            padding: 0.22rem 0.5rem; font-size: 0.72rem;
+            border: none; border-radius: 0.3rem;
+            cursor: pointer; background: #f8d7da; color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logoname"><h2>MNL <span class="exclusive">EXCLUSIVE</span></h2></div>
+                <div class="close" id="close_btn"><span class="material-symbols-outlined">close</span></div>
+            </div>
+            <div class="sidebar">
+                <a href="./AdminDashboard.html"><span class="material-symbols-outlined">grid_view</span><h3>Dashboard</h3></a>
+                <a href="./Approval.html"><span class="material-symbols-outlined">person_outline</span><h3>Orders</h3></a>
+                <a href="./Analytics.html"><span class="material-symbols-outlined">Insights</span><h3>Analytics</h3></a>
+                <a href="./adminmessage.html"><span class="material-symbols-outlined">mail_outline</span><h3>Messages</h3></a>
+                <a href="./Products.html"><span class="material-symbols-outlined">receipt_long</span><h3>Products</h3></a>
+                <a href="./Reports.html"><span class="material-symbols-outlined">report_gmailerrorred</span><h3>Reports</h3></a>
+                <a href="./Settings.html"><span class="material-symbols-outlined">settings</span><h3>Settings</h3></a>
+                <a href="./AddProduct.html" class="active"><span class="material-symbols-outlined">add</span><h3>Add Product</h3></a>
+                <a href="#" id="logoutBtn"><span class="material-symbols-outlined">logout</span><h3>Logout</h3></a>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Add Product</h1>
+            <div class="date"><input type="date"></div>
+
+            <div class="addproduct-layout">
+
+                <!-- LEFT: Form -->
+                <div>
+                    <div class="form-card">
+                        <h2>Product Information</h2>
+                        <div class="form-group">
+                            <label>Product Name *</label>
+                            <input type="text" id="productName" placeholder="e.g. Mesh Jersey 08">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="productDesc" placeholder="Describe the product..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select id="productCategory">
+                                    <option value="">Select Category</option>
+                                    <option>Tops</option>
+                                    <option>Bottoms</option>
+                                    <option>Jersey</option>
+                                    <option>Limited Edition</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="productStatus">
+                                    <option>Available</option>
+                                    <option>Out of Stock</option>
+                                    <option>Pre-order</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <h2>Pricing & Stock</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Price (₱) *</label>
+                                <input type="number" id="productPrice" placeholder="0.00" min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Discounted Price (₱)</label>
+                                <input type="number" id="productDiscount" placeholder="Optional" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Stock Quantity *</label>
+                                <input type="number" id="productStock" placeholder="0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>SKU / Product Code</label>
+                                <input type="text" id="productSKU" placeholder="e.g. MNL-MJ08">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <h2>Available Sizes</h2>
+                        <div class="size-options" id="sizeOptions">
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">XS</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">S</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">M</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">L</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">XL</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">XXL</button>
+                            <button type="button" class="size-btn" onclick="toggleSize(this)">Free Size</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-draft" onclick="saveAsDraft()">Save as Draft</button>
+                        <button class="btn-publish" onclick="publishProduct()">Publish Product</button>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Image Upload + Current Products -->
+                <div>
+                    <div class="form-card">
+                        <h2>Product Image</h2>
+                        <label class="image-drop-zone" for="imageInput">
+                            <span class="material-symbols-outlined">cloud_upload</span>
+                            <p>Click to upload<br><small>PNG, JPG up to 5MB</small></p>
+                            <input type="file" id="imageInput" accept="image/*">
+                        </label>
+                        <div class="image-preview-wrap">
+                            <img id="imagePreview" src="" alt="Preview">
+                        </div>
+                    </div>
+
+                    <!-- Real current products -->
+                    <div class="product-list-card">
+                        <h2>Current Products</h2>
+                        <div class="product-item">
+                            <img src="IMAGES/mesh08.jpg" alt="Mesh Jersey 08 Black">
+                            <div class="pinfo">
+                                <div class="pname">Mesh Jersey 08 (Black)</div>
+                                <div class="pprice">₱499 &nbsp;·&nbsp; Stock: 24</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/Meshwhite.jpeg" alt="Mesh Jersey 08 White">
+                            <div class="pinfo">
+                                <div class="pname">Mesh Jersey 08 (White)</div>
+                                <div class="pprice">₱499 &nbsp;·&nbsp; Stock: 20</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/Meshwhite27.jpeg" alt="Mesh White 27">
+                            <div class="pinfo">
+                                <div class="pname">Mesh White 27</div>
+                                <div class="pprice">₱499 &nbsp;·&nbsp; Stock: 15</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/manilainter.jpg" alt="Manila Interlude">
+                            <div class="pinfo">
+                                <div class="pname">Manila Interlude</div>
+                                <div class="pprice">₱499 &nbsp;·&nbsp; Stock: 18</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/interlude.jpg" alt="Interlude Navy">
+                            <div class="pinfo">
+                                <div class="pname">Interlude Navy</div>
+                                <div class="pprice">₱499 &nbsp;·&nbsp; Stock: 12</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/letemknow.jpeg" alt="Let Em Know">
+                            <div class="pinfo">
+                                <div class="pname">Let Em Know</div>
+                                <div class="pprice">₱351 &nbsp;·&nbsp; Stock: 30</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/MEslim.jpeg" alt="ME Slim Tee">
+                            <div class="pinfo">
+                                <div class="pname">ME Slim Tee</div>
+                                <div class="pprice">₱399 &nbsp;·&nbsp; Stock: 8</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/stay.jpg" alt="Stay Exclusives Tee">
+                            <div class="pinfo">
+                                <div class="pname">Stay Exclusives Tee</div>
+                                <div class="pprice">₱449 &nbsp;·&nbsp; Stock: 10</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <img src="IMAGES/sweatpants.jpeg" alt="Baggy Sweat Pants">
+                            <div class="pinfo">
+                                <div class="pname">Baggy Sweat Pants</div>
+                                <div class="pprice">₱699 &nbsp;·&nbsp; Stock: 14</div>
+                            </div>
+                            <div class="pbtns">
+                                <button class="btn-edit-small">Edit</button>
+                                <button class="btn-del-small" onclick="deleteItem(this)">Del</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu_bar"><span class="material-symbols-outlined">menu</span></button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info"><p><b>ADMIN NAME</b></p><p>Admin</p></div>
+                    <div class="profile-photo"><img src="IMAGES/prufile.webp" alt="profile-photo"></div>
+                </div>
+            </div>
+            <div class="recent_updates">
+                <h2>Recent Update</h2>
+                <div class="updates">
+                    <div class="update"><div class="profile-photo"><img src="IMAGES/buyer1.jpg" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                    <div class="update"><div class="profile-photo"><img src="IMAGES/buyer2.png" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                    <div class="update"><div class="profile-photo"><img src="IMAGES/buyer3.jpg" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="JAVASCRIPT/admin.js"></script>
+    <script>
+        // Image preview
+        document.getElementById('imageInput').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.getElementById('imagePreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function toggleSize(btn) { btn.classList.toggle('selected'); }
+
+        function publishProduct() {
+            const name     = document.getElementById('productName').value.trim();
+            const category = document.getElementById('productCategory').value;
+            const price    = document.getElementById('productPrice').value;
+            const stock    = document.getElementById('productStock').value;
+
+            if (!name)              { alert('Please enter a product name.'); return; }
+            if (!category)          { alert('Please select a category.'); return; }
+            if (!price || price<=0) { alert('Please enter a valid price.'); return; }
+            if (stock === '')        { alert('Please enter stock quantity.'); return; }
+
+            const sizes = [...document.querySelectorAll('.size-btn.selected')].map(b => b.textContent).join(', ');
+            alert(`✅ Product "${name}" published!\nCategory: ${category}\nPrice: ₱${price}\nStock: ${stock}\nSizes: ${sizes || 'None selected'}`);
+        }
+
+        function saveAsDraft() {
+            const name = document.getElementById('productName').value.trim();
+            alert(name ? `Draft saved for "${name}".` : 'Draft saved.');
+        }
+
+        function deleteItem(btn) {
+            if (confirm('Delete this product?')) {
+                btn.closest('.product-item').remove();
+            }
+        }
+    </script>
+</body>
+</html>

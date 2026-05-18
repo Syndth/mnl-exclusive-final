@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <title>Products - MNL Exclusive</title>
+    <style>
+        .products-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-white);
+            border: 1px solid var(--color-light);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            box-shadow: var(--box-shadow);
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.88rem;
+            color: var(--color-dark);
+            width: 200px;
+        }
+        .search-box span { color: var(--color-dark-variant); font-size: 1.1rem; }
+        .toolbar-right { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-light);
+            border-radius: 0.5rem;
+            background: var(--color-white);
+            color: var(--color-dark);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .btn-add {
+            display: flex; align-items: center; gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--color-primary); color: white;
+            border: none; border-radius: 0.5rem;
+            cursor: pointer; font-size: 0.85rem; font-weight: 600;
+            text-decoration: none;
+        }
+        .btn-add:hover { opacity: 0.85; }
+
+        .product-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            background: var(--color-white);
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        .stat-box p { font-size: 0.8rem; color: var(--color-dark-variant); margin-bottom: 0.3rem; }
+        .stat-box h2 { font-size: 1.4rem; color: var(--color-dark); }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .product-card {
+            background: var(--color-white);
+            border-radius: 1rem;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .product-card:hover { transform: translateY(-4px); }
+        .product-card .card-image {
+            width: 100%; height: 200px;
+            background: var(--color-light);
+            position: relative; overflow: hidden;
+        }
+        .product-card .card-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .product-card:hover .card-image img { transform: scale(1.05); }
+
+        .stock-badge {
+            position: absolute; top: 8px; right: 8px;
+            padding: 0.2rem 0.6rem; border-radius: 1rem;
+            font-size: 0.7rem; font-weight: 700;
+        }
+        .badge-in  { background: #d4edda; color: #155724; }
+        .badge-low { background: #fff3cd; color: #856404; }
+        .badge-out { background: #f8d7da; color: #721c24; }
+
+        .card-body { padding: 1rem; }
+        .card-body h3 { font-size: 0.9rem; color: var(--color-dark); margin-bottom: 0.2rem; }
+        .card-body .category { font-size: 0.75rem; color: var(--color-dark-variant); margin-bottom: 0.5rem; }
+        .card-body .price { font-size: 1rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.3rem; }
+        .card-body .stock-info { font-size: 0.78rem; color: var(--color-dark-variant); margin-bottom: 0.8rem; }
+        .card-actions { display: flex; gap: 0.4rem; }
+        .btn-card-edit {
+            flex: 1; padding: 0.4rem; border: none;
+            border-radius: 0.4rem; background: var(--color-light);
+            color: var(--color-dark); font-size: 0.78rem;
+            cursor: pointer; font-weight: 600;
+        }
+        .btn-card-edit:hover { background: var(--color-primary); color: white; }
+        .btn-card-del {
+            flex: 1; padding: 0.4rem; border: none;
+            border-radius: 0.4rem; background: #f8d7da;
+            color: #721c24; font-size: 0.78rem;
+            cursor: pointer; font-weight: 600;
+        }
+        .btn-card-del:hover { background: var(--color-danger); color: white; }
+
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--color-white); border-radius: 1rem;
+            padding: 2rem; width: 440px; max-width: 95vw;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal h2 { font-size: 1rem; margin-bottom: 1rem; color: var(--color-dark); }
+        .modal-preview {
+            width: 100%; height: 150px; object-fit: cover;
+            border-radius: 0.5rem; margin-bottom: 1rem;
+            background: var(--color-light);
+        }
+        .modal .form-group { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+        .modal .form-group label { font-size: 0.8rem; color: var(--color-dark-variant); font-weight: 600; }
+        .modal .form-group input,
+        .modal .form-group select {
+            padding: 0.6rem 0.9rem; border: 1px solid var(--color-light);
+            border-radius: 0.5rem; background: var(--color-background);
+            color: var(--color-dark); font-size: 0.88rem;
+        }
+        .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .modal-actions { display: flex; gap: 0.8rem; margin-top: 1.2rem; }
+        .modal-actions button { flex: 1; padding: 0.7rem; border: none; border-radius: 0.5rem; cursor: pointer; font-weight: 600; font-size: 0.88rem; }
+        .btn-modal-save { background: var(--color-primary); color: white; }
+        .btn-modal-cancel { background: var(--color-light); color: var(--color-dark); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logoname"><h2>MNL <span class="exclusive">EXCLUSIVE</span></h2></div>
+                <div class="close" id="close_btn"><span class="material-symbols-outlined">close</span></div>
+            </div>
+            <div class="sidebar">
+                <a href="./AdminDashboard.html"><span class="material-symbols-outlined">grid_view</span><h3>Dashboard</h3></a>
+                <a href="./Approval.html"><span class="material-symbols-outlined">person_outline</span><h3>Orders</h3></a>
+                <a href="./Analytics.html"><span class="material-symbols-outlined">Insights</span><h3>Analytics</h3></a>
+                <a href="./adminmessage.html"><span class="material-symbols-outlined">mail_outline</span><h3>Messages</h3></a>
+                <a href="./Products.html" class="active"><span class="material-symbols-outlined">receipt_long</span><h3>Products</h3></a>
+                <a href="./Reports.html"><span class="material-symbols-outlined">report_gmailerrorred</span><h3>Reports</h3></a>
+                <a href="./Settings.html"><span class="material-symbols-outlined">settings</span><h3>Settings</h3></a>
+                <a href="./AddProduct.html"><span class="material-symbols-outlined">add</span><h3>Add Product</h3></a>
+                <a href="#" id="logoutBtn"><span class="material-symbols-outlined">logout</span><h3>Logout</h3></a>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Products</h1>
+            <div class="date"><input type="date"></div>
+
+            <div class="product-stats">
+                <div class="stat-box"><p>Total Products</p><h2 id="totalProducts">0</h2></div>
+                <div class="stat-box"><p>In Stock</p><h2 id="inStockCount">0</h2></div>
+                <div class="stat-box"><p>Low Stock</p><h2 id="lowStockCount">0</h2></div>
+                <div class="stat-box"><p>Out of Stock</p><h2 id="outStockCount">0</h2></div>
+            </div>
+
+            <div class="products-toolbar">
+                <div class="search-box">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" id="searchInput" placeholder="Search products..." oninput="filterProducts()">
+                </div>
+                <div class="toolbar-right">
+                    <select class="filter-select" id="categoryFilter" onchange="filterProducts()">
+                        <option value="">All Categories</option>
+                        <option value="Tops">Tops</option>
+                        <option value="Bottoms">Bottoms</option>
+                        <option value="Jersey">Jersey</option>
+                        <option value="Limited Edition">Limited Edition</option>
+                    </select>
+                    <select class="filter-select" id="stockFilter" onchange="filterProducts()">
+                        <option value="">All Stock</option>
+                        <option value="in">In Stock</option>
+                        <option value="low">Low Stock</option>
+                        <option value="out">Out of Stock</option>
+                    </select>
+                    <a href="./AddProduct.html" class="btn-add">
+                        <span class="material-symbols-outlined" style="font-size:1rem">add</span>
+                        Add Product
+                    </a>
+                </div>
+            </div>
+
+            <div class="product-grid" id="productGrid"></div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu_bar"><span class="material-symbols-outlined">menu</span></button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info"><p><b>ADMIN NAME</b></p><p>Admin</p></div>
+                    <div class="profile-photo"><img src="../IMAGES/prufile.webp" alt="profile-photo"></div>
+                </div>
+            </div>
+            <div class="recent_updates">
+                <h2>Recent Update</h2>
+                <div class="updates">
+                    <div class="update"><div class="profile-photo"><img src="../IMAGES/buyer1.jpg" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                    <div class="update"><div class="profile-photo"><img src="../IMAGES/buyer2.png" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                    <div class="update"><div class="profile-photo"><img src="../IMAGES/buyer3.jpg" alt=""></div><div class="message"><p><b>Buyer</b> Received his order</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <h2>Edit Product</h2>
+            <img id="modalPreview" class="modal-preview" src="" alt="product">
+            <input type="hidden" id="editIndex">
+            <div class="form-group"><label>Product Name</label><input type="text" id="editName"></div>
+            <div class="modal-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="editCategory">
+                        <option>Tops</option><option>Bottoms</option>
+                        <option>Jersey</option><option>Limited Edition</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="editStatus">
+                        <option>Available</option><option>Out of Stock</option><option>Pre-order</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-row">
+                <div class="form-group"><label>Price (₱)</label><input type="number" id="editPrice"></div>
+                <div class="form-group"><label>Stock Quantity</label><input type="number" id="editStock"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-modal-save" onclick="saveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JAVASCRIPT/admin.js"></script>
+    <script>
+        let products = [
+            { name: "Mesh Jersey 08 (Black)",  category: "Jersey",           price: 499, stock: 24, status: "Available", image: "../IMAGES/mesh08.jpg" },
+            { name: "Mesh Jersey 08 (White)",  category: "Jersey",           price: 499, stock: 20, status: "Available", image: "../IMAGES/Meshwhite.jpeg" },
+            { name: "Mesh White 27",           category: "Jersey",           price: 499, stock: 15, status: "Available", image: "../IMAGES/Meshwhite27.jpeg" },
+            { name: "Manila Interlude",        category: "Tops",             price: 499, stock: 18, status: "Available", image: "../IMAGES/manilainter.jpg" },
+            { name: "Interlude Navy",          category: "Tops",             price: 499, stock: 12, status: "Available", image: "../IMAGES/interlude.jpg" },
+            { name: "Let Em Know",             category: "Tops",             price: 351, stock: 30, status: "Available", image: "../IMAGES/letemknow.jpeg" },
+            { name: "ME Slim Tee",             category: "Tops",             price: 399, stock: 8,  status: "Available", image: "../IMAGES/MEslim.jpeg" },
+            { name: "Stay Exclusives Tee",     category: "Limited Edition",  price: 449, stock: 10, status: "Available", image: "../IMAGES/stay.jpg" },
+            { name: "Baggy Sweat Pants",       category: "Bottoms",          price: 699, stock: 14, status: "Available", image: "../IMAGES/sweatpants.jpeg" },
+        ];
+
+        function getStockStatus(stock) {
+            if (stock === 0) return { label: "Out of Stock", cls: "badge-out", filter: "out" };
+            if (stock <= 10) return { label: "Low Stock",    cls: "badge-low", filter: "low" };
+            return                  { label: "In Stock",     cls: "badge-in",  filter: "in"  };
+        }
+
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            if (!list.length) {
+                grid.innerHTML = '<p style="color:var(--color-dark-variant);font-size:0.9rem;">No products found.</p>';
+                return;
+            }
+            grid.innerHTML = list.map(p => {
+                const i = products.indexOf(p);
+                const s = getStockStatus(p.stock);
+                return `
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="${p.image}" alt="${p.name}">
+                        <span class="stock-badge ${s.cls}">${s.label}</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>${p.name}</h3>
+                        <div class="category">${p.category}</div>
+                        <div class="price">₱${p.price.toLocaleString()}</div>
+                        <div class="stock-info">Stock: ${p.stock} pcs &nbsp;|&nbsp; ${p.status}</div>
+                        <div class="card-actions">
+                            <button class="btn-card-edit" onclick="openEdit(${i})">✏️ Edit</button>
+                            <button class="btn-card-del"  onclick="deleteProduct(${i})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('inStockCount').textContent  = products.filter(p => p.stock > 10).length;
+            document.getElementById('lowStockCount').textContent = products.filter(p => p.stock > 0 && p.stock <= 10).length;
+            document.getElementById('outStockCount').textContent = products.filter(p => p.stock === 0).length;
+        }
+
+        function filterProducts() {
+            const search   = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const stock    = document.getElementById('stockFilter').value;
+            const filtered = products.filter(p => {
+                return p.name.toLowerCase().includes(search)
+                    && (!category || p.category === category)
+                    && (!stock    || getStockStatus(p.stock).filter === stock);
+            });
+            renderProducts(filtered);
+        }
+
+        function openEdit(i) {
+            const p = products[i];
+            document.getElementById('editIndex').value    = i;
+            document.getElementById('editName').value     = p.name;
+            document.getElementById('editCategory').value = p.category;
+            document.getElementById('editPrice').value    = p.price;
+            document.getElementById('editStock').value    = p.stock;
+            document.getElementById('editStatus').value   = p.status;
+            document.getElementById('modalPreview').src   = p.image;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('editModal').classList.remove('active'); }
+
+        function saveEdit() {
+            const i = parseInt(document.getElementById('editIndex').value);
+            products[i].name     = document.getElementById('editName').value;
+            products[i].category = document.getElementById('editCategory').value;
+            products[i].price    = parseFloat(document.getElementById('editPrice').value);
+            products[i].stock    = parseInt(document.getElementById('editStock').value);
+            products[i].status   = document.getElementById('editStatus').value;
+            closeModal();
+            renderProducts(products);
+            updateStats();
+            alert('Product updated!');
+        }
+
+        function deleteProduct(i) {
+            if (confirm(`Delete "${products[i].name}"?`)) {
+                products.splice(i, 1);
+                renderProducts(products);
+                updateStats();
+            }
+        }
+
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        renderProducts(products);
+        updateStats();
+    </script>
+</body>
+</html>

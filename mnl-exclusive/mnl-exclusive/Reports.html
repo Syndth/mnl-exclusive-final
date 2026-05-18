@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <title>Reports - MNL Exclusive</title>
+    <style>
+        .report-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .report-filters select, .report-filters input[type="date"] {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-light);
+            border-radius: 0.5rem;
+            background: var(--color-white);
+            color: var(--color-dark);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .report-filters button {
+            padding: 0.5rem 1.2rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .report-filters button:hover { opacity: 0.85; }
+
+        .report-section {
+            background: var(--color-white);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+        .report-section h2 { color: var(--color-dark); margin-bottom: 1rem; font-size: 1rem; }
+        .report-section table { width: 100%; border-collapse: collapse; }
+        .report-section th, .report-section td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-light);
+            font-size: 0.88rem;
+        }
+        .report-section th { color: var(--color-dark-variant); font-weight: 600; }
+
+        .status-badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-success  { background: #d4edda; color: #155724; }
+        .badge-warning  { background: #fff3cd; color: #856404; }
+        .badge-danger   { background: #f8d7da; color: #721c24; }
+        .badge-default  { background: #e2e3e5; color: #383d41; }
+
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .summary-box {
+            background: var(--color-white);
+            padding: 1.2rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--box-shadow);
+        }
+        .summary-box p  { color: var(--color-dark-variant); font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .summary-box h2 { color: var(--color-dark); font-size: 1.5rem; }
+
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-success);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            float: right;
+            margin-bottom: 1rem;
+        }
+        .export-btn:hover { opacity: 0.85; }
+        .no-data { color: var(--color-dark-variant); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="top">
+            <div class="logoname">
+                <h2>MNL <span class="exclusive">EXCLUSIVE</span></h2>
+            </div>
+            <div class="close" id="close_btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="./AdminDashboard.html">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="./Approval.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                <h3>Orders</h3>
+            </a>
+            <a href="./Analytics.html">
+                <span class="material-symbols-outlined">Insights</span>
+                <h3>Analytics</h3>
+            </a>
+            <a href="./adminmessage.html">
+                <span class="material-symbols-outlined">mail_outline</span>
+                <h3>Messages</h3>
+            </a>
+            <a href="./Products.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <h3>Products</h3>
+            </a>
+            <a href="./Reports.html" class="active">
+                <span class="material-symbols-outlined">report_gmailerrorred</span>
+                <h3>Reports</h3>
+            </a>
+            <a href="./Settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <h3>Settings</h3>
+            </a>
+            <a href="./AddProduct.html">
+                <span class="material-symbols-outlined">add</span>
+                <h3>Add Product</h3>
+            </a>
+            <a href="./logout.php" id="logoutBtn">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <h1>Reports</h1>
+        <div class="date"><input type="date"></div>
+
+        <!-- Filters -->
+        <div class="report-filters">
+            <select id="filter-status">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+            <input type="date" id="filter-from">
+            <input type="date" id="filter-to">
+            <button onclick="loadReports()">Filter</button>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-row">
+            <div class="summary-box">
+                <p>Total Revenue</p>
+                <h2 id="summary-revenue">...</h2>
+            </div>
+            <div class="summary-box">
+                <p>Total Orders</p>
+                <h2 id="summary-count">...</h2>
+            </div>
+            <div class="summary-box">
+                <p>Period</p>
+                <h2 id="summary-period" style="font-size:1rem; padding-top:0.4rem;">...</h2>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="report-section">
+            <button class="export-btn" onclick="exportCSV()">
+                <span class="material-symbols-outlined" style="font-size:1rem">download</span>
+                Export CSV
+            </button>
+            <h2>Sales Report</h2>
+            <table id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="report-body">
+                    <tr><td colspan="7">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="top">
+            <button id="menu_bar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-symbols-outlined active">light_mode</span>
+                <span class="material-symbols-outlined">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p><b id="admin-name">Admin</b></p>
+                    <p>Admin</p>
+                </div>
+                <div class="profile-photo">
+                    <img src="IMAGES/prufile.webp" alt="profile-photo">
+                </div>
+            </div>
+        </div>
+        <div class="recent_updates">
+            <h2>Recent Update</h2>
+            <div class="updates" id="recent-updates">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="JAVASCRIPT/admin.js"></script>
+<script>
+// Set default date range: first of current month to today
+window.addEventListener('DOMContentLoaded', () => {
+    const today    = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    document.getElementById('filter-from').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('filter-to').value   = today.toISOString().split('T')[0];
+    loadReports();
+});
+
+async function loadReports() {
+    const from   = document.getElementById('filter-from').value;
+    const to     = document.getElementById('filter-to').value;
+    const status = document.getElementById('filter-status').value;
+
+    let url = `dashboard_data.php?action=reports&from=${from}&to=${to}`;
+    if (status) url += `&status=${status}`;
+
+    try {
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) {
+            alert('Session expired. Please login again.');
+            window.location.href = './LoginPage.php';
+            return;
+        }
+
+        // Admin name
+        document.getElementById('admin-name').textContent = data.admin_name;
+
+        // Summary
+        document.getElementById('summary-revenue').textContent = '₱' + data.revenue;
+        document.getElementById('summary-count').textContent   = data.count;
+        document.getElementById('summary-period').textContent  = from + ' → ' + to;
+
+        // Table rows
+        const tbody = document.getElementById('report-body');
+        if (!data.rows || data.rows.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="no-data">No records found for this period.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = data.rows.map(r => {
+            const date   = new Date(r.ordered_at).toLocaleDateString('en-PH', { year:'numeric', month:'short', day:'numeric' });
+            const amount = parseFloat(r.amount).toLocaleString('en-PH', { minimumFractionDigits: 2 });
+            return `
+                <tr>
+                    <td>#${String(r.id).padStart(4,'0')}</td>
+                    <td>${r.customer}</td>
+                    <td>${r.product}</td>
+                    <td>${r.quantity}</td>
+                    <td>₱${amount}</td>
+                    <td>${date}</td>
+                    <td><span class="status-badge ${badgeClass(r.status)}">${capitalize(r.status)}</span></td>
+                </tr>`;
+        }).join('');
+
+        // Recent updates
+        const dash = await fetch('dashboard_data.php?action=dashboard');
+        const dashData = await dash.json();
+        const updatesDiv = document.getElementById('recent-updates');
+        if (!dashData.delivered || dashData.delivered.length === 0) {
+            updatesDiv.innerHTML = '<p>No deliveries yet.</p>';
+        } else {
+            updatesDiv.innerHTML = dashData.delivered.map(d => `
+                <div class="update">
+                    <div class="profile-photo"><img src="IMAGES/buyer1.jpg" alt=""></div>
+                    <div class="message">
+                        <p><b>${d.fullname}</b> received their order</p>
+                        <small>${new Date(d.updated_at).toLocaleDateString()}</small>
+                    </div>
+                </div>`).join('');
+        }
+
+    } catch (err) {
+        console.error('Reports error:', err);
+    }
+}
+
+function badgeClass(status) {
+    if (status === 'delivered') return 'badge-success';
+    if (status === 'cancelled') return 'badge-danger';
+    if (status === 'pending')   return 'badge-warning';
+    return 'badge-default';
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function exportCSV() {
+    const rows = [['Order ID','Customer','Product','Qty','Amount','Date','Status']];
+    document.querySelectorAll('#reportTable tbody tr').forEach(tr => {
+        const cells = [...tr.querySelectorAll('td')].map((td, i) =>
+            i === 6 ? (td.querySelector('span')?.textContent ?? td.textContent) : td.textContent
+        );
+        rows.push(cells);
+    });
+    const csv = rows.map(r => r.join(',')).join('\n');
+    const a   = document.createElement('a');
+    a.href    = 'data:text/csv,' + encodeURIComponent(csv);
+    a.download = 'mnl_report.csv';
+    a.click();
+}
+</script>
+</body>
+</html>

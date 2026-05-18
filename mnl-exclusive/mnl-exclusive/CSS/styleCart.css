@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    margin: 0;
+    background-size: cover;         
+    background-position: center;        
+    background-repeat: no-repeat;
+    background-attachment: fixed ;
+    background-blend-mode: lighten;
+    background-color: var(--clr-color-background);
+}
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  scroll-padding-top: 60px;
+}
+:root {
+--clr-primary: #7380ec;
+--clr-danger: #ff7782;
+--clr-success: #41f1b6;
+--clr-white1: #ffffff;
+--clr-info-dark: #7d8da1;
+--clr-info-light: #dce1eb;
+--clr-dark: #363949;
+--clr-warning: #ff4edc;
+--clr-light: rgba(132,139,200,0.18);
+--clr-primary-variant: #111e88;
+--clr-dark-variant: #677483;
+--clr-color-background: #f6f6f9;
+
+--card-border-radius: 2rem;
+--border-radius-1: 0.4rem;
+--border-radius-2: 0.8rem;
+--border-radius-3: 1.2rem;
+
+--card-padding: 1.8rem;
+--padding-1: 1.2rem;
+--box-shadow: 0 2rem 3rem var(--clr-light);
+
+--clr-color-background: #181a1e;
+--clr-white: #202528;
+}
+
+/* ===== MAIN HEADER ===== */
+nav ul {
+    display: flex;
+    text-decoration: none;
+    list-style-type: none;
+    justify-content: right;
+    margin-right: 100px;
+    margin-top: -100px;
+    margin-left: 1110px;
+}
+li a {
+    margin: 10px;
+    color: var(--clr-dark-variant);
+    font-size: 1rem;
+    font-weight: 400;
+    position: relative;
+    top: 20px;
+    text-decoration: none;
+    transition: 300ms ease;
+    font-family: 'Poppins',sans-serif;
+}
+li a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: white;
+  left: 0;
+  bottom: -6px;
+  transition: 300ms ease;
+  font-family: sans-serif;
+}
+li a:hover::after {
+  width: 100%;
+}
+h1 {
+    margin-left: 40px;
+    padding: 3px;
+    line-height: 0cm;
+    font-weight: 500;
+    font-size: 1.8rem;
+    position: relative;
+    top: -30px;
+    color: var(--clr-dark-variant);
+    font-family: 'Poppins';
+    letter-spacing: 5px;
+}
+.EX {
+    margin-left: 70px;
+}
+header {
+    padding: 40px;
+    width: 100%;
+    z-index: 10;
+    background-color: var(--clr-white);
+}
+li a:hover {
+    color: var(--clr-primary);
+}
+h3 {
+    font-family: "Playfair Display";
+    position: relative;
+    top: 450px;
+    margin-left: -20px;
+}
+ul {
+    list-style: none;
+}
+
+/* PAGE LAYOUT */
+.cart-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 30px 40px 100px 40px;
+  background: var(--clr-color-background);
+}
+.cart-section a {
+  font-family: sans-serif;
+  color: var(--clr-primary);
+}
+.cart-section p {
+  font-family: sans-serif;
+}
+.cart-section .empty-cart-message {
+  color: var(--clr-dark-variant);
+}
+#cart-items-container {
+  max-height: 650px; /* adjust height as needed */
+  overflow-y: auto;  /* enables vertical scroll */
+  padding-right: 10px; /* optional: keeps content from touching scrollbar */
+}
+/* LEFT: CART SECTION */
+.cart-section {
+  flex: 1;
+  border-radius: var(--border-radius-3);
+  background-color: var(--clr-white);
+  border: 1px solid white;
+}
+
+.cart-section:hover {
+  box-shadow: none;
+}
+
+.breadcrumb {
+  font-family: 'Poppins';
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: var(--clr-dark-variant);
+  position: relative;
+  left: 0px;
+}
+.breadcrumb span {
+  color: var(--clr-primary);
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: var(--border-radius-3);
+  border: 1px solid white;
+  transition: 0.3s;
+}
+.cart-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  accent-color: black;
+}
+.cart-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+.item-details .item-price {
+  font-family: 'Poppins';
+  width: 90px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+  margin-left: 30px;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.qty-btn {
+  width: 25px;
+  height: 25px;
+  background-color: #ccc;
+  color: #111;
+  border: none;
+  border-radius: var(--border-radius-1);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qty-btn:hover {
+  background-color: #b5b5b5;
+}
+
+.qty {
+  font-weight: 700;
+  min-width: 15px;
+  text-align: center;
+}
+.cart-section p {
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  margin: 30px;
+}
+.cart-section {
+  padding: 10px;
+}
+.cart-image {
+  color: black;
+}
+
+.item-name {
+  font-family: 'Poppins';
+  margin-left: 2rem;
+}
+.item-qty-controls {
+  margin: 0rem 2rem 0.5rem 2rem;
+  
+}
+.decrease,
+.increase,
+.qty {
+  border-radius: var(--border-radius-1);
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+.remove-item {
+  border-radius: var(--border-radius-1);
+  margin-left: -30px;
+  margin-bottom: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+}
+.item-variant {
+  font-family: 'Poppins';
+}
+/* RIGHT: ORDER SUMMARY */
+.summary-panel {
+  width: 28%;
+  background-color: var(--clr-white);
+  border: 1px solid white;
+  padding: 18px 20px;
+  border-radius: var(--border-radius-3);
+  align-self: flex-start;
+  margin-top: 0px;
+}
+
+.summary-panel h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--clr-dark-variant);
+  font-family: sans-serif;
+}
+
+.summary-total {
+  font-family: sans-serif;
+  color: var(--clr-dark-variant);
+}
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: var(--clr-dark-variant);
+  font-family: sans-serif;
+}
+
+.voucher {
+  display: flex;
+  margin: 15px 0;
+}
+
+.voucher input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  font-size: 13px;
+}
+
+.voucher button {
+  background-color: #00cfff;
+  color: #000;
+  border: 1px solid #00b3de;
+  border-radius: 0 3px 3px 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.voucher button:hover {
+  background-color: #00b8e6;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #bbb;
+  margin-top: 10px;
+  padding-top: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+#checkoutBtn {
+  background-color: var(--clr-dark-variant);
+  color: var(--clr-white);
+  font-family: 'Poppins',sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+}
+
+#checkoutBtn:hover {
+  background-color: var(--clr-primary);
+}
+
+/* SCROLLBAR & MISC */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e6e6e6;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+/* FOOTER TERMS */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #111;
+  color: white;
+  padding: 40px 60px;
+  font-family: "Poppins", sans-serif;
+  flex-wrap: wrap;
+  position: relative;
+  top: 5rem;
+}
+.footer-section {
+  width: 30%;
+}
+
+.footer-section h3 {
+  color: var(--clr-info-dark);
+  margin-bottom: 10px;
+  position: relative;
+  top: 0px;
+  margin-left: 10px;
+  font-family: sans-serif;
+}
+
+.footer-section p {
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.5;
+
+}
+.footer-section a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-section a:hover {
+  color: var(--clr-primary);
+}
+.footer-section.Help a {
+  display: block;          
+  color: #ccc;            
+  text-decoration: none;   
+  margin: 5px 0;           
+  font-size: 13px;         
+  cursor: pointer;         
+  transition: color 0.3s;
+  line-height: 1.5;
+}
+.footer-section.Help {
+  width: 100px;
+  position: relative;
+  left: 80px;
+}
+.footer-section.Help a:hover {
+  color: var(--clr-primary);
+}
+.footer-section.Follow p {
+  width: 140px;
+}
+.footer-section.Follow {
+  position: relative;
+  left: 180px;
+}

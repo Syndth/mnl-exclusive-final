@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <title>Analytics - MNL Exclusive</title>
+    <style>
+        .analytics-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .analytics-card {
+            background: var(--color-white);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        .analytics-card h3 { font-size: 0.9rem; color: var(--color-dark-variant); margin-bottom: 0.5rem; }
+        .analytics-card h1 { font-size: 1.8rem; color: var(--color-dark); }
+        .analytics-card small { color: var(--color-success); font-size: 0.8rem; }
+
+        .chart-section {
+            background: var(--color-white);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+        .chart-section h2 { margin-bottom: 1rem; color: var(--color-dark); }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            height: 180px;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--color-light);
+        }
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            gap: 0.4rem;
+        }
+        .bar {
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 6px 6px 0 0;
+            transition: opacity 0.2s;
+            cursor: pointer;
+            min-height: 4px;
+        }
+        .bar:hover { opacity: 0.75; }
+        .bar-label { font-size: 0.75rem; color: var(--color-dark-variant); }
+        .bar-value { font-size: 0.7rem; color: var(--color-dark); font-weight: 600; }
+
+        .top-products table { width: 100%; border-collapse: collapse; }
+        .top-products th, .top-products td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-light);
+            font-size: 0.9rem;
+        }
+        .top-products th { color: var(--color-dark-variant); font-weight: 600; }
+        .rank-badge {
+            display: inline-block;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .progress-bar-wrap { background: var(--color-light); border-radius: 10px; height: 8px; width: 120px; }
+        .progress-bar-fill { background: var(--color-primary); height: 8px; border-radius: 10px; }
+
+        .no-data { color: var(--color-dark-variant); font-size: 0.9rem; padding: 1rem 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="top">
+            <div class="logoname">
+                <h2>MNL <span class="exclusive">EXCLUSIVE</span></h2>
+            </div>
+            <div class="close" id="close_btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="./AdminDashboard.html">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="./Approval.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                <h3>Orders</h3>
+            </a>
+            <a href="./Analytics.html" class="active">
+                <span class="material-symbols-outlined">Insights</span>
+                <h3>Analytics</h3>
+            </a>
+            <a href="./adminmessage.html">
+                <span class="material-symbols-outlined">mail_outline</span>
+                <h3>Messages</h3>
+            </a>
+            <a href="./Products.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <h3>Products</h3>
+            </a>
+            <a href="./Reports.html">
+                <span class="material-symbols-outlined">report_gmailerrorred</span>
+                <h3>Reports</h3>
+            </a>
+            <a href="./Settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <h3>Settings</h3>
+            </a>
+            <a href="./AddProduct.html">
+                <span class="material-symbols-outlined">add</span>
+                <h3>Add Product</h3>
+            </a>
+            <a href="./logout.php" id="logoutBtn">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <h1>Analytics</h1>
+        <div class="date"><input type="date"></div>
+
+        <!-- Summary Cards -->
+        <div class="analytics-cards">
+            <div class="analytics-card">
+                <h3>Total Revenue</h3>
+                <h1 id="total-revenue">...</h1>
+                <small>All time</small>
+            </div>
+            <div class="analytics-card">
+                <h3>Total Orders</h3>
+                <h1 id="total-orders">...</h1>
+                <small>All time</small>
+            </div>
+            <div class="analytics-card">
+                <h3>New Customers</h3>
+                <h1 id="new-customers">...</h1>
+                <small>This month</small>
+            </div>
+            <div class="analytics-card">
+                <h3>Avg. Order Value</h3>
+                <h1 id="avg-order">...</h1>
+                <small>All time</small>
+            </div>
+        </div>
+
+        <!-- Bar Chart: Monthly Sales -->
+        <div class="chart-section">
+            <h2>Monthly Sales (₱)</h2>
+            <div class="bar-chart" id="bar-chart">
+                <p class="no-data">Loading chart...</p>
+            </div>
+        </div>
+
+        <!-- Top Products -->
+        <div class="chart-section top-products">
+            <h2>Top Selling Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Product</th>
+                        <th>Units Sold</th>
+                        <th>Revenue</th>
+                        <th>Sales Share</th>
+                    </tr>
+                </thead>
+                <tbody id="top-products-body">
+                    <tr><td colspan="5">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="top">
+            <button id="menu_bar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-symbols-outlined active">light_mode</span>
+                <span class="material-symbols-outlined">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p><b id="admin-name">Admin</b></p>
+                    <p>Admin</p>
+                </div>
+                <div class="profile-photo">
+                    <img src="IMAGES/prufile.webp" alt="profile-photo">
+                </div>
+            </div>
+        </div>
+        <div class="recent_updates">
+            <h2>Recent Update</h2>
+            <div class="updates" id="recent-updates">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="JAVASCRIPT/admin.js"></script>
+<script>
+async function loadAnalytics() {
+    try {
+        const res  = await fetch('dashboard_data.php?action=analytics');
+        const data = await res.json();
+
+        if (data.error) {
+            alert('Session expired. Please login again.');
+            window.location.href = './LoginPage.php';
+            return;
+        }
+
+        // Admin name
+        document.getElementById('admin-name').textContent = data.admin_name;
+
+        // Summary cards
+        document.getElementById('total-revenue').textContent  = '₱' + data.total_revenue;
+        document.getElementById('total-orders').textContent   = data.total_orders;
+        document.getElementById('new-customers').textContent  = data.new_customers;
+        document.getElementById('avg-order').textContent      = '₱' + data.avg_order;
+
+        // Bar chart
+        const chartDiv = document.getElementById('bar-chart');
+        if (!data.monthly_sales || data.monthly_sales.length === 0) {
+            chartDiv.innerHTML = '<p class="no-data">No sales data yet.</p>';
+        } else {
+            const maxVal = Math.max(...data.monthly_sales.map(m => parseFloat(m.total)));
+            chartDiv.innerHTML = data.monthly_sales.map(m => {
+                const pct    = maxVal > 0 ? (parseFloat(m.total) / maxVal) * 160 : 4;
+                const label  = parseFloat(m.total) >= 1000
+                    ? '₱' + (parseFloat(m.total) / 1000).toFixed(1) + 'k'
+                    : '₱' + parseFloat(m.total).toFixed(0);
+                return `
+                    <div class="bar-group">
+                        <span class="bar-value">${label}</span>
+                        <div class="bar" style="height:${pct}px" title="${m.month}: ${label}"></div>
+                        <span class="bar-label">${m.month}</span>
+                    </div>`;
+            }).join('');
+        }
+
+        // Top products
+        const tbody = document.getElementById('top-products-body');
+        if (!data.top_products || data.top_products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="no-data">No sales data yet.</td></tr>';
+        } else {
+            const maxUnits = Math.max(...data.top_products.map(p => parseInt(p.units_sold)));
+            tbody.innerHTML = data.top_products.map((p, i) => {
+                const sharePct = maxUnits > 0 ? Math.round((parseInt(p.units_sold) / maxUnits) * 100) : 0;
+                return `
+                    <tr>
+                        <td><span class="rank-badge">${i + 1}</span></td>
+                        <td>${p.name}</td>
+                        <td>${p.units_sold}</td>
+                        <td>₱${parseFloat(p.revenue).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+                        <td>
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill" style="width:${sharePct}%"></div>
+                            </div>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        // Recent updates — reuse dashboard endpoint
+        const dash = await fetch('dashboard_data.php?action=dashboard');
+        const dashData = await dash.json();
+        const updatesDiv = document.getElementById('recent-updates');
+        if (!dashData.delivered || dashData.delivered.length === 0) {
+            updatesDiv.innerHTML = '<p>No deliveries yet.</p>';
+        } else {
+            updatesDiv.innerHTML = dashData.delivered.map(d => `
+                <div class="update">
+                    <div class="profile-photo"><img src="IMAGES/buyer1.jpg" alt=""></div>
+                    <div class="message">
+                        <p><b>${d.fullname}</b> received their order</p>
+                        <small>${new Date(d.updated_at).toLocaleDateString()}</small>
+                    </div>
+                </div>`).join('');
+        }
+
+    } catch (err) {
+        console.error('Analytics error:', err);
+    }
+}
+
+loadAnalytics();
+</script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <title>Messages - MNL Exclusive</title>
+    <style>
+        .messages-section { margin-top: 1rem; }
+
+        .messages-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-white);
+            border-radius: 1rem;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        .messages-table th {
+            padding: 1rem;
+            text-align: left;
+            color: var(--color-dark-variant);
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--color-light);
+        }
+        .messages-table td {
+            padding: 0.9rem 1rem;
+            font-size: 0.88rem;
+            border-bottom: 1px solid var(--color-light);
+            color: var(--color-dark);
+            vertical-align: top;
+        }
+        .messages-table tr:last-child td { border-bottom: none; }
+
+        /* Unread rows highlighted */
+        .messages-table tr.unread td { font-weight: 600; background: #f0f4ff; }
+
+        .msg-preview {
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-reply {
+            padding: 0.3rem 0.8rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+        }
+        .btn-delete {
+            padding: 0.3rem 0.8rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-reply:hover  { opacity: 0.85; }
+        .btn-delete:hover { opacity: 0.85; }
+
+        .unread-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px; height: 20px;
+            font-size: 0.7rem;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 480px;
+            max-width: 90%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        .modal-box h3 { margin-bottom: 0.5rem; color: var(--color-dark); }
+        .modal-box p  { color: var(--color-dark-variant); font-size: 0.9rem; margin-bottom: 1rem; }
+        .modal-box textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.8rem;
+            border: 1px solid var(--color-light);
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        .modal-actions { display: flex; gap: 0.8rem; margin-top: 1rem; justify-content: flex-end; }
+        .modal-actions button {
+            padding: 0.5rem 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .btn-send   { background: var(--color-primary); color: white; }
+        .btn-cancel { background: var(--color-light); color: var(--color-dark); }
+
+        .no-data { text-align: center; color: var(--color-dark-variant); padding: 2rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="top">
+            <div class="logoname">
+                <h2>MNL <span class="exclusive">EXCLUSIVE</span></h2>
+            </div>
+            <div class="close" id="close_btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="./AdminDashboard.html">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="./Approval.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                <h3>Orders</h3>
+            </a>
+            <a href="./Analytics.html">
+                <span class="material-symbols-outlined">Insights</span>
+                <h3>Analytics</h3>
+            </a>
+            <a href="./adminmessage.html" class="active">
+                <span class="material-symbols-outlined">mail_outline</span>
+                <h3>Messages <span class="unread-badge" id="unread-count" style="display:none"></span></h3>
+            </a>
+            <a href="./Products.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <h3>Products</h3>
+            </a>
+            <a href="./Reports.html">
+                <span class="material-symbols-outlined">report_gmailerrorred</span>
+                <h3>Reports</h3>
+            </a>
+            <a href="./Settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <h3>Settings</h3>
+            </a>
+            <a href="./AddProduct.html">
+                <span class="material-symbols-outlined">add</span>
+                <h3>Add Product</h3>
+            </a>
+            <a href="./logout.php" id="logoutBtn">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <h1>Messages</h1>
+        <div class="date"><input type="date"></div>
+
+        <div class="messages-section">
+            <table class="messages-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="messages-body">
+                    <tr><td colspan="7" class="no-data">Loading messages...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="top">
+            <button id="menu_bar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-symbols-outlined active">light_mode</span>
+                <span class="material-symbols-outlined">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p><b id="admin-name">Admin</b></p>
+                    <p>Admin</p>
+                </div>
+                <div class="profile-photo">
+                    <img src="IMAGES/prufile.webp" alt="profile-photo">
+                </div>
+            </div>
+        </div>
+        <div class="recent_updates">
+            <h2>Recent Update</h2>
+            <div class="updates" id="recent-updates">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- REPLY MODAL -->
+<div class="modal-overlay" id="reply-modal">
+    <div class="modal-box">
+        <h3>Reply to <span id="modal-name"></span></h3>
+        <p>To: <span id="modal-email"></span></p>
+        <p>Subject: Re: <span id="modal-subject"></span></p>
+        <textarea id="modal-reply" placeholder="Type your reply here..."></textarea>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn-send" onclick="sendReply()">Send Reply</button>
+        </div>
+    </div>
+</div>
+
+<script src="JAVASCRIPT/admin.js"></script>
+<script>
+let currentReplyEmail   = '';
+let currentReplySubject = '';
+let currentMessageId    = 0;
+
+async function loadMessages() {
+    try {
+        const res  = await fetch('messages_api.php?action=list');
+        const data = await res.json();
+
+        if (data.error) {
+            alert('Session expired. Please login again.');
+            window.location.href = './LoginPage.php';
+            return;
+        }
+
+        document.getElementById('admin-name').textContent = data.admin_name;
+
+        // Unread badge
+        const unreadBadge = document.getElementById('unread-count');
+        if (data.unread > 0) {
+            unreadBadge.textContent     = data.unread;
+            unreadBadge.style.display   = 'inline-block';
+        }
+
+        // Messages table
+        const tbody = document.getElementById('messages-body');
+        if (!data.messages || data.messages.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="no-data">No messages yet.</td></tr>';
+        } else {
+            tbody.innerHTML = data.messages.map((m, i) => `
+                <tr class="${m.is_read == 0 ? 'unread' : ''}" id="row-${m.id}">
+                    <td>#${String(i + 1).padStart(3, '0')}</td>
+                    <td>${m.name}</td>
+                    <td>${m.email}</td>
+                    <td>${m.subject}</td>
+                    <td class="msg-preview" title="${m.message}">${m.message}</td>
+                    <td>${m.date}</td>
+                    <td>
+                        <button class="btn-reply"
+                            onclick="openReply(${m.id}, '${escapeStr(m.name)}', '${escapeStr(m.email)}', '${escapeStr(m.subject)}')">
+                            Reply
+                        </button>
+                        <button class="btn-delete" onclick="deleteMessage(${m.id})">Delete</button>
+                    </td>
+                </tr>`).join('');
+        }
+
+        // Recent updates
+        const dash = await fetch('dashboard_data.php?action=dashboard');
+        const dashData = await dash.json();
+        const updatesDiv = document.getElementById('recent-updates');
+        if (!dashData.delivered || dashData.delivered.length === 0) {
+            updatesDiv.innerHTML = '<p>No deliveries yet.</p>';
+        } else {
+            updatesDiv.innerHTML = dashData.delivered.map(d => `
+                <div class="update">
+                    <div class="profile-photo"><img src="IMAGES/buyer1.jpg" alt=""></div>
+                    <div class="message">
+                        <p><b>${d.fullname}</b> received their order</p>
+                        <small>${new Date(d.updated_at).toLocaleDateString()}</small>
+                    </div>
+                </div>`).join('');
+        }
+
+    } catch (err) {
+        console.error('Messages error:', err);
+    }
+}
+
+function escapeStr(str) {
+    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function openReply(id, name, email, subject) {
+    currentMessageId    = id;
+    currentReplyEmail   = email;
+    currentReplySubject = subject;
+    document.getElementById('modal-name').textContent    = name;
+    document.getElementById('modal-email').textContent   = email;
+    document.getElementById('modal-subject').textContent = subject;
+    document.getElementById('modal-reply').value         = '';
+    document.getElementById('reply-modal').classList.add('active');
+
+    // Mark as read
+    fetch('messages_api.php?action=read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    });
+    const row = document.getElementById('row-' + id);
+    if (row) row.classList.remove('unread');
+}
+
+function closeModal() {
+    document.getElementById('reply-modal').classList.remove('active');
+}
+
+function sendReply() {
+    const replyText = document.getElementById('modal-reply').value.trim();
+    if (!replyText) { alert('Please type a reply first.'); return; }
+
+    // Opens default mail client with reply pre-filled
+    const mailto = `mailto:${currentReplyEmail}?subject=Re: ${encodeURIComponent(currentReplySubject)}&body=${encodeURIComponent(replyText)}`;
+    window.location.href = mailto;
+    closeModal();
+}
+
+async function deleteMessage(id) {
+    if (!confirm('Delete this message?')) return;
+    await fetch('messages_api.php?action=delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+    });
+    document.getElementById('row-' + id)?.remove();
+}
+
+loadMessages();
+</script>
+</body>
+</html>

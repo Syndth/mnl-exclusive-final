@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <title>MNL Exclusive - Dashboard</title>
+</head>
+<body>
+<div class="container">
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="top">
+            <div class="logoname">
+                <h2>MNL <span class="exclusive">EXCLUSIVE</span></h2>
+            </div>
+            <div class="close" id="close_btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="./AdminDashboard.html" class="active">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="./Approval.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                <h3>Orders</h3>
+            </a>
+            <a href="./Analytics.html">
+                <span class="material-symbols-outlined">Insights</span>
+                <h3>Analytics</h3>
+            </a>
+            <a href="./adminmessage.html">
+                <span class="material-symbols-outlined">mail_outline</span>
+                <h3>Messages</h3>
+            </a>
+            <a href="./Products.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <h3>Products</h3>
+            </a>
+            <a href="./Reports.html">
+                <span class="material-symbols-outlined">report_gmailerrorred</span>
+                <h3>Reports</h3>
+            </a>
+            <a href="./Settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <h3>Settings</h3>
+            </a>
+            <a href="./AddProduct.html">
+                <span class="material-symbols-outlined">add</span>
+                <h3>Add Product</h3>
+            </a>
+            <a href="./logout.php" id="logoutBtn">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <h1>Dashboard</h1>
+        <div class="date"><input type="date"></div>
+
+        <div class="insights">
+            <!-- TOTAL SALES -->
+            <div class="sales">
+                <span class="material-symbols-outlined">trending_up</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Total Sales</h3>
+                        <h1 id="total-sales">Loading...</h1>
+                    </div>
+                    <div class="progress">
+                        <svg><circle r="30" cy="40" cx="40"></circle></svg>
+                        <div class="number" id="sales-pct">0%</div>
+                    </div>
+                </div>
+                <small>Last 24 hours</small>
+            </div>
+
+            <!-- EXPENSES (orders count) -->
+            <div class="expenses">
+                <span class="material-symbols-outlined">local_mall</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Orders Today</h3>
+                        <h1 id="orders-today">Loading...</h1>
+                    </div>
+                    <div class="progress">
+                        <svg><circle r="30" cy="40" cx="40"></circle></svg>
+                        <div class="number" id="orders-pct">0%</div>
+                    </div>
+                </div>
+                <small>Last 24 hours</small>
+            </div>
+
+            <!-- INCOME -->
+            <div class="income">
+                <span class="material-symbols-outlined">stacked_line_chart</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Income</h3>
+                        <h1 id="income">Loading...</h1>
+                    </div>
+                    <div class="progress">
+                        <svg><circle r="30" cy="40" cx="40"></circle></svg>
+                        <div class="number" id="income-pct">0%</div>
+                    </div>
+                </div>
+                <small>Last 24 hours</small>
+            </div>
+        </div>
+
+        <!-- RECENT ORDERS -->
+        <div class="recent-order">
+            <h1>Recent Orders</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Qty</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="recent-orders-body">
+                    <tr><td colspan="5">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+        <div class="top">
+            <button id="menu_bar">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-symbols-outlined active">light_mode</span>
+                <span class="material-symbols-outlined">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p><b id="admin-name">Admin</b></p>
+                    <p>Admin</p>
+                </div>
+                <div class="profile-photo">
+                    <img src="IMAGES/prufile.webp" alt="profile-photo">
+                </div>
+            </div>
+        </div>
+
+        <div class="recent_updates">
+            <h2>Recent Update</h2>
+            <div class="updates" id="recent-updates">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="JAVASCRIPT/admin.js"></script>
+<script>
+async function loadDashboard() {
+    try {
+        const res  = await fetch('dashboard_data.php?action=dashboard');
+        const data = await res.json();
+
+        if (data.error) {
+            alert('Session expired. Please login again.');
+            window.location.href = './LoginPage.php';
+            return;
+        }
+
+        // Admin name
+        document.getElementById('admin-name').textContent = data.admin_name;
+
+        // Stats
+        document.getElementById('total-sales').textContent  = '₱' + data.sales;
+        document.getElementById('orders-today').textContent = data.orders_today;
+        document.getElementById('income').textContent       = '₱' + data.income;
+
+        // Progress percentages (today vs all-time for orders)
+        const orderPct = data.orders_all > 0
+            ? Math.min(Math.round((data.orders_today / data.orders_all) * 100), 100)
+            : 0;
+        document.getElementById('sales-pct').textContent  = orderPct + '%';
+        document.getElementById('orders-pct').textContent = orderPct + '%';
+        document.getElementById('income-pct').textContent = orderPct + '%';
+
+        // Recent orders table
+        const tbody = document.getElementById('recent-orders-body');
+        if (data.recent_orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5">No orders yet.</td></tr>';
+        } else {
+            tbody.innerHTML = data.recent_orders.map(o => `
+                <tr>
+                    <td>${o.product_name}</td>
+                    <td>${o.quantity}</td>
+                    <td>${o.payment_method ? o.payment_method.toUpperCase() : 'N/A'}</td>
+                    <td class="${statusClass(o.status)}">${capitalize(o.status)}</td>
+                    <td class="primary">Details</td>
+                </tr>
+            `).join('');
+        }
+
+        // Recent updates (delivered orders)
+        const updatesDiv = document.getElementById('recent-updates');
+        if (data.delivered.length === 0) {
+            updatesDiv.innerHTML = '<p>No deliveries yet.</p>';
+        } else {
+            updatesDiv.innerHTML = data.delivered.map(d => `
+                <div class="update">
+                    <div class="profile-photo">
+                        <img src="IMAGES/buyer1.jpg" alt="">
+                    </div>
+                    <div class="message">
+                        <p><b>${d.fullname}</b> received their order</p>
+                        <small>${new Date(d.updated_at).toLocaleDateString()}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+    } catch (err) {
+        console.error('Dashboard error:', err);
+    }
+}
+
+function statusClass(status) {
+    if (status === 'delivered') return 'success';
+    if (status === 'cancelled') return 'danger';
+    return 'warning';
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+loadDashboard();
+</script>
+</body>
+</html>

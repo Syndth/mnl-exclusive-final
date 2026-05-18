@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/stylecreate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Create Account - MNL Exclusive</title>
+</head>
+<body>
+    <header>
+        <h1>MNL</h1>
+        <h1 class="EX">EXCLUSIVE</h1>
+        <nav>
+            <ul>
+                <li><a href="./HomePage.html">Home</a></li>
+                <li><a href="./HomePage.html">About&nbsp;Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="login-container">
+        <h2>Create Account</h2>
+        <form id="CreateAccountForm">
+            <input type="text" id="firstname" placeholder="First Name" required>
+            <input type="text" id="lastname" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+
+            <div class="showpass">
+                <label>
+                    <input type="checkbox" onclick="togglePass()"> Show Password
+                </label>
+            </div>
+
+            <label class="gender-label">Gender</label>
+            <div class="gender-options">
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female</label>
+                <label><input type="radio" name="gender" value="prefer-not"> Prefer not to say</label>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" id="agreeTerms" required>
+                    By creating an account, you confirm that you have read and agreed to our Terms and Conditions and Privacy Policy.
+                </label>
+            </div>
+
+            <button type="submit" class="login-btn">Create Account</button>
+        </form>
+    </div>
+
+<script>
+function togglePass() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+
+document.getElementById("CreateAccountForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const firstname = document.getElementById("firstname").value.trim();
+    const lastname  = document.getElementById("lastname").value.trim();
+    const email     = document.getElementById("email").value.trim();
+    const password  = document.getElementById("password").value.trim();
+    const gender    = document.querySelector('input[name="gender"]:checked');
+    const agreed    = document.getElementById("agreeTerms").checked;
+
+    if (!firstname || !lastname || !email || !password) {
+        alert("Please complete all fields.");
+        return;
+    }
+
+    if (!gender) {
+        alert("Please select a gender.");
+        return;
+    }
+
+    if (!agreed) {
+        alert("Please agree to the Terms and Conditions.");
+        return;
+    }
+
+    const response = await fetch("register_process.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            firstname: firstname,
+            lastname:  lastname,
+            email:     email,
+            password:  password,
+            gender:    gender.value
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        alert("Account Created Successfully!");
+        window.location.href = "./LoginPage.php";
+    } else {
+        alert(result.message);
+    }
+});
+</script>
+
+    <footer class="footer">
+        <div class="footer-section terms">
+            <h3>Terms and Condition</h3>
+            <p>By using this website, you agree to our terms, which include accurate use of our site and products, understanding that prices and availability may change without notice, that all purchases are subject to confirmation, that returns are accepted within 7 days if items are unworn and in original condition, that all content including designs and images belong to Manila Exclusive, and may not be copied or used without permission, and that we are not liable for any damages resulting from use of this site or our products.</p>
+        </div>
+        <div class="footer-section Help">
+            <h3>Help</h3>
+            <a href="./faq.html">FAQ</a>
+            <a href="./privacypolicy.html">Privacy Policy</a>
+            <a href="./returnpolicy.html">Return Policy</a>
+            <a href="./bulkorder.html">Bulk Order</a>
+        </div>
+        <div class="footer-section Follow">
+            <h3>Follow Us</h3>
+            <p>Tiktok : <a href="https://www.tiktok.com/@manilaexclusives2">@manilaexclusive2</a></p>
+        </div>
+        <div class="footer-section Contact">
+            <h3>Contact Us</h3>
+            <p>J.P. Rizal Extension, West Rembo, 1644 City of Taguig, Metro Manila, Philippines</p>
+            <p>Email: <a href="mailto:manilaexclusive@gmail.com">manilaexclusive@gmail.com</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

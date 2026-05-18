@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />>
+    <title>MNL Exclusive</title>
+</head>
+<body>
+    <div class="container">
+
+        <!-- aside section start -->
+         <aside>
+
+            <div class="top">
+
+                <div class="logoname">
+                    <h2>MNL
+                    <span class="exclusive">EXCLUSIVE</span></h2>
+                </div>
+                <div class="close" id="close_btn">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="./AdminDashboard.html">
+                    <span class="material-symbols-outlined">grid_view</span>
+                   <h3>Dashboard</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-symbols-outlined">person_outline</span>
+                   <h3>Orders</h3>
+                </a>
+                <a href="./Analytics.html">
+                    <span class="material-symbols-outlined">Insights</span>
+                   <h3>Analytics</h3>
+                </a>
+                <a href="./adminmessage.html">
+                    <span class="material-symbols-outlined">mail_outline</span>
+                   <h3>Messages</h3>
+                </a>
+                <a href="./Products.html">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                   <h3>Products</h3>
+                </a>
+                <a href="./Reports.html">
+                    <span class="material-symbols-outlined">report_gmailerrorred</span>
+                   <h3>Reports</h3>
+                </a>
+                <a href="./Settings.html">
+                    <span class="material-symbols-outlined">settings</span>
+                   <h3>Settings</h3>
+                </a>
+                <a href="./AddProduct.html">
+                    <span class="material-symbols-outlined">add</span>
+                   <h3>Add Product</h3>
+                </a>
+                <a href="#" id="logoutBtn"> 
+                    <span class="material-symbols-outlined">logout</span>
+                   <h3>Logout</h3>
+                </a>
+            </div>
+
+         </aside>
+        <!-- aside section end -->
+
+            <!-- MAIN SECTION -->
+    <main>
+      <h1>Order Confirmation</h1>
+      <div class="date">
+        <input type="date">
+      </div>
+
+      <div class="orders-section">
+        <table class="orders-table">
+
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Address</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Total Price</th>
+              <th>Payment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="orderRows">
+            <tr><td colspan="7" style="text-align:center; padding:1rem;">Loading orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+        <!-- right section start -->
+        <div class="right">
+            <div class="top">
+                <button id="menu_bar">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p><b>ADMIN NAME</b></p>
+                        <p>Admin</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../IMAGES/prufile.webp" alt="profile-photo">
+                    </div>
+                </div>
+            </div>
+            <!-- END TOP -->
+
+            <!-- START RECENT UPDATE -->
+             <div class="recent_updates">
+                <h2>Recent Update</h2>
+
+            <div class="updates">
+
+             <div class="update">
+                <div class="profile-photo">
+                    <img src="../IMAGES/buyer1.jpg" alt="">
+                </div>
+                <div class="message">
+                    <p><b>Buyer </b> Received his order</p>
+                </div>
+             </div>
+
+                <div class="update">
+                <div class="profile-photo">
+                    <img src="../IMAGES/buyer2.png" alt="">
+                </div>
+                <div class="message">
+                    <p><b>Buyer </b> Received his order</p>
+                </div>
+             </div>
+
+                <div class="update">
+                <div class="profile-photo">
+                    <img src="../IMAGES/buyer3.jpg" alt="">
+                </div>
+                <div class="message">
+                    <p><b>Buyer </b> Received his order</p>
+                </div>
+             </div>
+             </div>
+            </div>
+        <!-- END RECENT UPDATE -->
+        <!-- END SALE ANALYTICS -->
+         </div>
+        <!-- right section end -->
+    </div>
+
+    <script src="../JAVASCRIPT/admin.js"></script>
+    <script>
+    // ✅ Load real orders from database
+    function loadOrders() {
+        fetch("get_orders.php")
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById("orderRows");
+            if (!data.success || data.orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No orders yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = "";
+            data.orders.forEach(order => {
+                const isPending = order.status === "Pending";
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${order.fullname || "User #" + order.user_id}</td>
+                    <td>${order.shipping_address || "—"}</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>₱${parseFloat(order.total_amount).toFixed(2)}</td>
+                    <td>${order.status}</td>
+                    <td class="button">
+                        ${order.status.toLowerCase() === "pending" ? `
+                            <button class="btn-confirm" onclick="updateOrder(${order.id}, 'processing', this)">Confirm</button>
+                            <button class="btn-reject" onclick="updateOrder(${order.id}, 'cancelled', this)">Reject</button>
+                        ` : order.status.toLowerCase() === "processing" ? `
+                            <button class="btn-confirm" onclick="updateOrder(${order.id}, 'shipped', this)">Mark Shipped</button>
+                        ` : order.status.toLowerCase() === "shipped" ? `
+                            <button class="btn-confirm" onclick="updateOrder(${order.id}, 'delivered', this)">Mark Delivered</button>
+                        ` : `
+                            <span>${order.status}</span>
+                        `}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(() => {
+            document.getElementById("orderRows").innerHTML =
+                '<tr><td colspan="7" style="text-align:center; color:red;">Could not load orders. Make sure get_orders.php is in your project folder.</td></tr>';
+        });
+    }
+
+    function updateOrder(orderId, status, btn) {
+        fetch("update_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order_id: orderId, status: status })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Order ${status}!`);
+                loadOrders(); // refresh table
+            } else {
+                alert("Error: " + data.error);
+            }
+        });
+    }
+
+    loadOrders();
+    </script>
+</body>
+</html>
